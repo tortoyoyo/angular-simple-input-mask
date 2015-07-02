@@ -40,9 +40,7 @@ angular.module('angularMask', [])
                 if(value.replace(/\D/g,'').length <= arrFormat[a].replace(/\D/g,'').length){
                   format = arrFormat[a];
                   break;
-                } else{
-                  formt = '';
-                }
+                } 
               }
             }
             var newValue = '';
