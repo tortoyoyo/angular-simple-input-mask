@@ -9,6 +9,8 @@ angular.module('angularMask', [])
           var format = attrs.angularMask,
               arrFormat = format.split('|');
 
+              var oldValue = 0;
+
           if(arrFormat.length > 1){
             arrFormat.sort(function(a, b){
               return a.length - b.length;
@@ -17,9 +19,15 @@ angular.module('angularMask', [])
           model.$formatters.push(mask);
           model.$parsers.push(function (value) {
             model.$viewValue = mask(value);
+            if(value.length > 0 && oldValue < value.length){
             var modelValue = String(value).replace(/\D/g,'');
             el.val(model.$viewValue);
+            oldValue = value.length;
             return modelValue;
+          } else{
+            oldValue = value.length;
+            return value;
+          }
           });
 
           function mask(val) {
@@ -32,6 +40,8 @@ angular.module('angularMask', [])
                 if(value.replace(/\D/g,'').length <= arrFormat[a].replace(/\D/g,'').length){
                   format = arrFormat[a];
                   break;
+                } else{
+                  formt = '';
                 }
               }
             }
